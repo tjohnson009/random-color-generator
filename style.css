@@ -1,0 +1,24 @@
+html {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+}
+
+body {
+    background-color: #111111;
+}
+
+.buttons-div {
+    flex-direction: column;
+}
+
+.button {
+    background-Color: #f2ef44;
+    font-weight: bolder; 
+    outline-style: none;
+    font-size: .8rem;
+}
+
+.main {
+    margin: 1.5rem; 
+}
