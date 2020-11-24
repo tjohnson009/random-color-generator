@@ -38,7 +38,7 @@ function changeColor() {
     console.log(newColor); 
     return newColor; 
     })();
-    mainDiv.style.backgroundColor =  
+    // mainDiv.style.backgroundColor =  
 };
 
 styleButtons(); 
