@@ -29,19 +29,32 @@ function resizeDiv() {
 }; 
 
 function changeColor() {
-    const mainDiv = document.querySelector('#main'); 
-    (function() {
+    const mainDiv = document.querySelector('.main'); 
+    mainDiv.style.backgroundColor = pickColor(); 
+};
+
+function pickColor() {
     let r = Math.floor(Math.random() * 256); 
     let g = Math.floor(Math.random() * 256); 
     let b = Math.floor(Math.random() * 256); 
-    let newColor = `${r}, ${g}, ${b}`; 
+    let newColor = `rgb(${r}, ${g}, ${b})`; 
     console.log(newColor); 
+
+    (function changeColorText() {
+    const text = document.querySelector('.main p'); 
+    // console.log(text.innerHTML); 
+    text.innerHTML = newColor; 
+    })(); 
+
     return newColor; 
-    })();
-    // mainDiv.style.backgroundColor =  
-};
+    };
 
 styleButtons(); 
 sizeAndStyleDiv(); 
 window.addEventListener('resize', resizeDiv); 
 document.querySelector('button').addEventListener('click', changeColor); 
+document.querySelector('html').addEventListener('keydown',function(event) {
+    if (event.keyCode === 32) {
+        changeColor(); 
+    }; 
+}); 
