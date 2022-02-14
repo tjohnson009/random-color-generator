@@ -28,31 +28,31 @@ function resizeDiv() {
   mainDiv.style.height = `${window.innerHeight * 0.65}px`;
 }
 
-function newDOMColor() {
+function newColorBackground() {
   const mainDiv = document.querySelector(".main");
-  mainDiv.style.backgroundColor = `${pickColor().string}`;
+  mainDiv.style.backgroundColor = `${determineNewColor().string}`;
 }
 
-function pickColor() {
+function determineNewColor() {
+  // returns new color
   // set the 3 colors
   let r = Math.floor(Math.random() * 256);
   let g = Math.floor(Math.random() * 256);
   let b = Math.floor(Math.random() * 256);
   //update and save the 3 color values to a color object
-  let newColor = {
+  let color = {
     string: `rgb(${r}, ${g}, ${b})`,
     red: r,
     green: g,
     blue: b,
   };
   // set the RGB text in the main paragraph
-  changeRGBText(newColor);
+  changeRGBText(color);
 
   // set the RGB sliders values
-  setColorInputs(newColor);
-  // changeRGBText(newColor);
+  setColorInputs(color);
 
-  return newColor; // for other functions use
+  return color; // for other functions use
 }
 
 function setColorInputs(color) {
@@ -65,12 +65,39 @@ function setColorInputs(color) {
   blueInput.value = color.blue;
 }
 
-function handleColorInputChange() {}
+// function handleColorInputChange() {
+//     // get color inputs
 
-function changeRGBText(newColor) {
+//     // attach event listeners to all color inputs
+
+//     // set the value of the color on change of the sliders
+//         //
+//     // call this function at the end of script
+// }
+
+function updateRGB() {
+  // get the 3 colors
+  let r = redInput.value;
+  let g = greenInput.value;
+  let b = blueInput.value;
+  let color = {
+    string: `rgb(${r}, ${g}, ${b})`,
+    red: r,
+    green: g,
+    blue: b,
+  };
+  // set the RGB text in main paragraph
+  changeRGBText(color);
+  // set main background color
+  document.querySelector(".main").style.backgroundColor = `${color.string}`;
+  // return color
+  return color;
+}
+
+function changeRGBText(color) {
   const text = document.querySelector(".main p");
   // console.log(text.innerHTML);
-  text.innerHTML = newColor.string;
+  text.innerHTML = color.string;
 }
 
 // function randomColor() {
@@ -80,11 +107,11 @@ function changeRGBText(newColor) {
 //     return `rgb(${r}, ${g}, ${b})`;
 // };
 
-function determineInvertColor(newColor) {
+function determineInvertColor() {
   const text = document.querySelector(".main p");
   let currentRed, currentBlue, currentGreen, invertedColor;
 
-  // determine current red, blue, and green from DOM paragraph // why not get the color from the color object?
+  // determine current red, blue, and green from DOM paragraph; DOM paragraph comes from color object
   let newText = text.innerHTML.split(","); //separate the numbers into an array
   let firstNumber = newText[0].split("("); //removes paren on first element
   currentRed = parseInt(firstNumber[1]);
@@ -131,10 +158,23 @@ function invertDOMColor() {
 // styleButtons();
 sizeAndStyleDiv(); // initial sizing of the div
 window.addEventListener("resize", resizeDiv);
-document.querySelector("#new-color").addEventListener("click", newDOMColor);
+const redInput = document.querySelector("#adjust-red");
+const greenInput = document.querySelector("#adjust-green");
+const blueInput = document.querySelector("#adjust-blue");
+const allInputs = [redInput, greenInput, blueInput];
+for (let i = 0; i < allInputs.length; i++) {
+  allInputs[i].addEventListener("input", () => {
+    // console.log(allInputs[i].id + ' - ' + allInputs[i].value);
+    updateRGB();
+  });
+}
+document
+  .querySelector("#new-color")
+  .addEventListener("click", newColorBackground);
 // document.querySelector('html').addEventListener('keydown', function(event) {
 //     if (event.keyCode === 32) {
 //         newDOMColor();
 //     };
 // });    // ADDING KEYPRESS EVENTS LATER
 document.querySelector("#invert").addEventListener("click", invertDOMColor);
+// handleColorInputChange();
