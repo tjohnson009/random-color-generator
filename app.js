@@ -12,7 +12,7 @@ function sizeAndStyleDiv() {
 //1. Get Div
     const mainDiv = document.querySelector('.main'); 
     // console.log(mainDiv);
-//2. Style and position Div
+//2. Style and position Div 
     mainDiv.style.backgroundColor = 'white'; 
     mainDiv.parentElement.style.display = 'flex'; 
     mainDiv.parentElement.style.flexDirection = 'column'; 
@@ -156,7 +156,21 @@ function invertDOMColor() {
         setColorInputs(invertedColor); 
     }; 
 
+function initializeCopyColor() {
+    let copyButton = document.querySelector('#copy'); 
+    
+    copyButton.addEventListener('click', (e) => {
+        let copyText = document.querySelector('.main p').innerHTML; 
+        navigator.clipboard.writeText(copyText).then(() => {
+            alert(`${copyText} copied to clipboard`);  
+          },() => {
+            console.error('Failed to copy the color');
+          });
+    })
+}
+
 // styleButtons(); 
+initializeCopyColor(); 
 sizeAndStyleDiv(); // initial sizing of the div
 window.addEventListener('resize', resizeDiv); 
     const redInput = document.querySelector("#adjust-red");
